@@ -17,6 +17,10 @@ export const signUp = async (req, res) => {
         if (!validateEmail(email)) {
             return res.status(400).json({ error: "Invalid email format" });
         }
+        if(income < 0 )
+        {
+            return res.status(400).json({ error: "Income cannot be negative" });
+        }
 
         //hash password
         const salt = await bcrypt.genSalt(10)

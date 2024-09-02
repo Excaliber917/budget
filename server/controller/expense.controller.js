@@ -3,7 +3,7 @@ import ExpenseList from '../model/expenseList.model.js'
 
 export const setExpense = async (req, res) => {
     const userId = req.user._id;
-    const { expenseName, amount, category } = req.body;
+    const { expenseName, amount, category, date } = req.body;
 
     try {
         // Find the user's ExpenseList, or create one if it doesn't exist
@@ -20,7 +20,7 @@ export const setExpense = async (req, res) => {
             expenseName,
             amount,
             category,
-            
+            date
         });
 
         // Save the expense
@@ -36,7 +36,7 @@ export const setExpense = async (req, res) => {
         });
     } catch (error) {
         res.status(500).json({
-            message: 'Error creating expense',
+            message: 'Error in creating expense',
             error: error.message,
         });
     }
@@ -48,7 +48,7 @@ export const getAllExpenses = async (req, res) => {
         const userId = req.user._id
         const expenseList = await ExpenseList.findOne({ userId }).populate('expenses')
         if (!expenseList) {
-            return res.status(201).json({message:"no list"})
+            return res.status(201).json({ message: "no list" })
         }
         res.status(200).json(expenseList)
     } catch (error) {
@@ -59,3 +59,80 @@ export const getAllExpenses = async (req, res) => {
 
     }
 }
+
+
+export const editExpense = async (req, res) => {
+    const { id } = req.params; // Get the expense ID from the request parameters
+    const { expenseName, amount, category, date } = req.body; // Get the updated expense data from the request body
+
+    try {
+        // Find the expense by ID
+        const expense = await Expense.findById(id);
+
+        if (!expense) {
+            return res.status(404).json({
+                message: 'Expense not found',
+            });
+        }
+
+        // Update the expense details
+        expense.expenseName = expenseName || expense.expenseName;
+        expense.amount = amount || expense.amount;
+        expense.category = category || expense.category;
+        expense.date = date || expense.date;
+
+        // Save the updated expense
+        const updatedExpense = await expense.save();
+
+        res.status(200).json({
+            message: 'Expense updated successfully',
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error updating expense',
+            error: error.message,
+        });
+    }
+};
+
+export const deleteExpense = async (req, res) => {
+    const userId = req.user._id;
+    const { id: expenseId } = req.params;
+
+    try {
+        // Find the expense by ID
+        const expense = await Expense.findById(expenseId);
+
+        if (!expense) {
+            return res.status(404).json({
+                message: 'Expense not found',
+            });
+        }
+
+        // Verify the expense belongs to the user
+        const expenseList = await ExpenseList.findOne({ userId });
+        if (!expenseList) {
+            return res.status(404).json({
+                message: 'Expense list not found',
+            });
+        }
+
+        // Remove the expense ID from the user's ExpenseList
+        expenseList.expenses = expenseList.expenses.filter(id => id.toString() !== expenseId);
+
+        // Save the updated ExpenseList
+        await expenseList.save();
+
+        // Delete the expense from the Expense model
+        await Expense.findByIdAndDelete(expenseId);
+
+        res.status(200).json({
+            message: 'Expense deleted successfully',
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Unable to delete the expense',
+            error: error.message,
+        });
+    }
+};

@@ -22,6 +22,10 @@ const expenseSchema = new Schema({
     type: String,
     required: true,
   },
+  date: {
+    type: Date,
+    required: true,
+  },
 }, {
   timestamps: true, // Automatically adds createdAt and updatedAt fields
 });

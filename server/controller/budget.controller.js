@@ -44,12 +44,12 @@ export const setBudget = async (req, res) => {
 }
 
 
-export const getAllBudgets = async (req,res)=>{
+export const getAllBudgets = async (req, res) => {
     try {
-        const userId =  req.user._id
-        const budgetList = await BudgetList.findOne({userId}).populate('budgets')
+        const userId = req.user._id
+        const budgetList = await BudgetList.findOne({ userId }).populate('budgets')
         if (!budgetList) {
-            return res.status(201).json({message:"no list"})
+            return res.status(201).json({ message: "no list" })
         }
         res.status(200).json(budgetList)
 
@@ -58,6 +58,57 @@ export const getAllBudgets = async (req,res)=>{
             message: 'Error getting all budgets',
             error: error.message,
         });
-        
+
     }
+}
+
+export const updateBudget = async (req, res) => {
+    const { id } = req.params
+    const { budgetName, amount, category, startDate, endDate } = req.body
+    try {
+        const budgetItem = await SingleBudgetItem.findById(id)
+        if (!budgetItem) {
+            return res.status(404).json({
+                message: 'Expense not found',
+            });
+        }
+        budgetItem.budgetName = budgetName || budgetItem.budgetName
+        budgetItem.amount = amount || budgetItem.amount
+        budgetItem.category = category || budgetItem.category
+        budgetItem.startDate = startDate || budgetItem.startDate
+        budgetItem.endDate = endDate || budgetItem.endDate
+
+        await budgetItem.save()
+
+        res.status(200).json({
+            message: 'Budget updated successfully',
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error updating budget',
+            error: error.message,
+        });
+
+    }
+}
+
+export const deleteBudget = async (req, res) => {
+
+    const { id } = req.params
+
+    try {
+        await SingleBudgetItem.findByIdAndDelete(id)
+
+        res.status(200).json({
+            message: 'Budget deleted successfully',
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: 'Unable to delete budget',
+            error: error.message,
+        });
+
+    }
+
 }
