@@ -64,25 +64,16 @@ export const getAllBudgets = async (req, res) => {
 
 export const updateBudget = async (req, res) => {
     const { id } = req.params
-    const { budgetName, amount, category, startDate, endDate } = req.body
     try {
-        const budgetItem = await SingleBudgetItem.findById(id)
+        const budgetItem = await SingleBudgetItem.findByIdAndUpdate(id, { $set: req.body }, { new: true })
         if (!budgetItem) {
             return res.status(404).json({
                 message: 'Expense not found',
             });
         }
-        budgetItem.budgetName = budgetName || budgetItem.budgetName
-        budgetItem.amount = amount || budgetItem.amount
-        budgetItem.category = category || budgetItem.category
-        budgetItem.startDate = startDate || budgetItem.startDate
-        budgetItem.endDate = endDate || budgetItem.endDate
-
-        await budgetItem.save()
-
         res.status(200).json({
             message: 'Budget updated successfully',
-            budgetItem:budgetItem
+            budgetItem: budgetItem
         });
     } catch (error) {
         res.status(500).json({

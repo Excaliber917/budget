@@ -8,7 +8,7 @@ const validateEmail = (email) => {
 };
 export const signUp = async (req, res) => {
     try {
-        const { name, userName, email, password, income } = req.body
+        const { name, userName, email, password, income,savingsGoal } = req.body
         const user = await User.findOne({ userName })
         if (user)
             return res.status(400).json({ error: "user already exits" })
@@ -32,7 +32,8 @@ export const signUp = async (req, res) => {
             userName,
             password: hashPassword,
             email,
-            income
+            income,
+            savingsGoal
         })
 
 
@@ -46,7 +47,8 @@ export const signUp = async (req, res) => {
                 name: newUser.name,
                 userName: newUser.userName,
                 email: newUser.email,
-                income: newUser.income
+                income: newUser.income,
+                savingsGoal: newUser.savingsGoal
             })
         }
 
@@ -86,7 +88,8 @@ export const login = async (req, res) => {
             userName: user.userName,
             email: user.email,
             gender: user.gender,
-            profilePic: user.profilePic,
+            income: user.income,
+            savingsGoal: user.savingsGoal,
         })
 
     } catch (error) {

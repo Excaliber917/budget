@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0, // Default income can be set to 0 or a different value if desired
     },
+    savingsGoal: {
+        type: Number,
+        default: 0, // Default income can be set to 0 or a different value if desired
+    },
 }, { timestamps: true });
 
 

@@ -63,27 +63,15 @@ export const getAllExpenses = async (req, res) => {
 
 export const editExpense = async (req, res) => {
     const { id } = req.params; // Get the expense ID from the request parameters
-    const { expenseName, amount, category, date } = req.body; // Get the updated expense data from the request body
 
     try {
-        // Find the expense by ID
-        const expense = await Expense.findById(id);
+        const updatedExpense = await Expense.findByIdAndUpdate(id,{$set:req.body},{new:true})
 
-        if (!expense) {
+        if (!updatedExpense) {
             return res.status(404).json({
                 message: 'Expense not found',
             });
         }
-
-        // Update the expense details
-        expense.expenseName = expenseName || expense.expenseName;
-        expense.amount = amount || expense.amount;
-        expense.category = category || expense.category;
-        expense.date = date || expense.date;
-
-        // Save the updated expense
-        const updatedExpense = await expense.save();
-
         res.status(200).json({
             message: 'Expense updated successfully',
             updatedExpense:updatedExpense
