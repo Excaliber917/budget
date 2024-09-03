@@ -82,6 +82,7 @@ export const updateBudget = async (req, res) => {
 
         res.status(200).json({
             message: 'Budget updated successfully',
+            budgetItem:budgetItem
         });
     } catch (error) {
         res.status(500).json({

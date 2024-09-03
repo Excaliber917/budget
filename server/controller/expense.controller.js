@@ -86,6 +86,7 @@ export const editExpense = async (req, res) => {
 
         res.status(200).json({
             message: 'Expense updated successfully',
+            updatedExpense:updatedExpense
         });
     } catch (error) {
         res.status(500).json({
