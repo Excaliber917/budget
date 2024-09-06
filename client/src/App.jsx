@@ -10,23 +10,28 @@ import Signup from "./pages/Signup"
 import { Toaster } from 'react-hot-toast'
 import SetIncome from "./pages/SetIncome"
 import SingleBudgetItem from "./pages/singleBudgetItem"
+import PrivateRoute from "./components/PrivateRoute"
+import Contact from "./pages/Contact"
 
 function App() {
-
   return (
     <>
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/expenses" element={<Expenses />} />
-          <Route path="/budget" element={<Budget />} />
-          <Route path="/budgetitems" element={<SingleBudgetItem />} />
-          <Route path="/report" element={<Reports />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/wallet" element={<SetIncome />} />
+          <Route path="/" element={<PrivateRoute element={Home} />} />
+          <Route path="/expenses" element={<PrivateRoute element={ Expenses} />} />
+          <Route path="/budget" element={<PrivateRoute element={Budget} />} />
+          <Route path="/budgetitems" element={<PrivateRoute element={SingleBudgetItem} />} />
+          <Route path="/report" element={<PrivateRoute element={Reports} />} />
+          <Route path="/profile" element={<PrivateRoute element={Profile} />} />
+          <Route path="/wallet" element={<PrivateRoute element={SetIncome} />} />
+
+
+          {/* public routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/contact" element={<Contact />} />
 
 
         </Routes>
