@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import Summary from "../components/summary";
+import Summary from "../components/Summary";
 import { useSetBudgetList } from "../hooks/useSetBudgetList";
 import { useSetExpenseList } from "../hooks/useSetExpenseList";
 import { useTotalExpense } from "../hooks/useTotalExpense";
