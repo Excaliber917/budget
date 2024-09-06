@@ -10,7 +10,7 @@ import jwt from 'jsonwebtoken'
         maxAge: 15 * 24 * 60 * 60 * 1000, //milisecs
         httpOnly: true,
         sameSite: "None",
-        secure: process.env.NODE_ENV === "production"
+        secure: process.env.NODE_ENV 
         // secure:false
     })
 

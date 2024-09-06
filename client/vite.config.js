@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api":{
-        target: "https://fintech-backend-m65o.onrender.com",
+        target: "http://localhost:5000",
         changeOrigin: true,
         secure: false,
       }
