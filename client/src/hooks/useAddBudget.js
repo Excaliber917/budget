@@ -12,7 +12,7 @@ export const useAddBudget = () => {
 
         try {
             setLoading(true);
-            const res = await axios.post('/api/budget/', {
+            const res = await axios.post('https://fintech-backend-eu1c.onrender.com/api/budget/', {
                 budgetName,
                 amount,
                 category,

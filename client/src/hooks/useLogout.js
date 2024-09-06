@@ -14,7 +14,7 @@ function useLogout() {
         if(!user)
             return
         try {
-            await axios.post('api/auth/logout',{withCredentials:true})
+            await axios.post('https://fintech-backend-eu1c.onrender.com/api/auth/logout',{withCredentials:true})
             localStorage.removeItem("fintechUser")
             setUser(null)
             navigate("/login")

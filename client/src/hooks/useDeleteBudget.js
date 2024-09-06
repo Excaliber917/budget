@@ -6,7 +6,7 @@ export const useDeleteBudget = () => {
     const { budgetList, setBudgetList } = useGetBudgetList()
     const deleteBudget = async (id) => {
         try {
-            const res = await axios.delete(`api/budget/delete/${id}`,{withCredentials:true});
+            const res = await axios.delete(`https://fintech-backend-eu1c.onrender.com/api/budget/delete/${id}`,{withCredentials:true});
             toast.success(res.data.message);
             setBudgetList(budgetList.filter((item)=>item._id !== id))
          

@@ -9,7 +9,7 @@ export const useEditBudget = () => {
     const updateBudget = async ({ budgetName, amount, category, startDate, endDate }, id) => {
         try {
             setLoading(true);
-            const res = await axios.put(`api/budget/edit/${id}`, { budgetName, amount, category, startDate, endDate },{withCredentials:true});
+            const res = await axios.put(`https://fintech-backend-eu1c.onrender.com/api/budget/edit/${id}`, { budgetName, amount, category, startDate, endDate },{withCredentials:true});
             const updatedBudget = res.data.budgetItem
 
             const updatedBudgetList = budgetList.map((budget) => (

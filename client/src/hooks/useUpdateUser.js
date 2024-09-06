@@ -27,7 +27,7 @@ export const useUpdateUser = () => {
             }
 
             // Send the PUT request to update the user profile
-            const res = await axios.put(`/api/user/update/${user._id}`, data,{withCredentials:true});
+            const res = await axios.put(`https://fintech-backend-eu1c.onrender.com/api/user/update/${user._id}`, data,{withCredentials:true});
 
             // Update the user data in local storage and context
             localStorage.setItem("fintechUser", JSON.stringify(res.data));

@@ -14,7 +14,7 @@ export const useAddExpense = () => {
         try {
             setLoading(true)
             // console.log(loading)
-            const res = await axios.post('/api/expense/', {
+            const res = await axios.post('https://fintech-backend-eu1c.onrender.com/api/expense/', {
                 expenseName,
                 amount,
                 category,

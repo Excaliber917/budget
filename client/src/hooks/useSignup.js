@@ -18,7 +18,7 @@ export const useSignup = ()=>{
             return
         try {
             setLoading(true)
-            const res = await axios.post("/api/auth/signup",{name , userName , email , password },{withCredentials:true})
+            const res = await axios.post("https://fintech-backend-eu1c.onrender.com/api/auth/signup",{name , userName , email , password },{withCredentials:true})
             // console.log(res.data)
             localStorage.setItem("fintechUser",JSON.stringify(res.data))
             setUser(res.data)
