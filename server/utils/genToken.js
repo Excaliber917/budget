@@ -9,8 +9,8 @@ import jwt from 'jsonwebtoken'
     res.cookie("cookie", token, {
         maxAge: 15 * 24 * 60 * 60 * 1000, //milisecs
         httpOnly: true,
-        sameSite: "strict",
-        secure: process.env.NODE_ENV || "VED"
+        sameSite: "None",
+        secure: process.env.NODE_ENV=== "PRODUCTION"
         // secure:false
     })
 
