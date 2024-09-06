@@ -9,7 +9,7 @@ import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 import { Toaster } from 'react-hot-toast'
 import SetIncome from "./pages/SetIncome"
-import SingleBudgetItem from "./pages/singleBudgetItem"
+import SingleBudgetItem from "./pages/SingleBudgetItem"
 import PrivateRoute from "./components/PrivateRoute"
 import Contact from "./pages/Contact"
 
