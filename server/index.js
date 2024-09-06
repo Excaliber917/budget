@@ -11,9 +11,8 @@ dotenv.config()
 const app = express()
 
 const corsOptions = {
-    origin: 'https://localhost:5173', //  frontend URL
-    // origin: 'https://fintech-8xnk.onrender.com', //  frontend URL
-    optionsSuccessStatus: 200,
+    // origin: 'https://localhost:5173', //  frontend URL
+    origin: 'https://fintech-8xnk.onrender.com', //  frontend URL
     credentials: true,
 };
 app.use(cors(corsOptions))
