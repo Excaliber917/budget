@@ -18,8 +18,9 @@ export const useAddBudget = () => {
                 category,
                 startDate,
                 endDate
-            });
-            setBudgetList([...budgetList,res.data.budget])
+            },{withCredentials:true});
+            const updatedBudgetList = Array.isArray(budgetList) ? budgetList : [];
+            setBudgetList([...updatedBudgetList, res.data.budget]);
             toast.success(res.data.message);
         } catch (error) {
             console.log(error);

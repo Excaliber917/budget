@@ -19,9 +19,10 @@ export const useAddExpense = () => {
                 amount,
                 category,
                 date
-            })
+            },{withCredentials:true})
             // console.log(res.data)
-            setExpenseList([...expenseList,res.data.expense])
+            const updatedExpenseList = Array.isArray(expenseList) ? expenseList : []
+            setExpenseList([...updatedExpenseList,res.data.expense])
             toast.success(res.data.message)
 
 

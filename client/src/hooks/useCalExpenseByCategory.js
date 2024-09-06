@@ -8,8 +8,7 @@ export const useCalExbyCat = () => {
    
     const calculateAmount = (category, startDate, endDate) => {
 
-        const totalAmount = expenseList
-            .filter((item) => {
+        const totalAmount = expenseList?.filter((item) => {
                 const itemDate = new Date(item.date);
                 const start = new Date(startDate);
                 const end = new Date(endDate);

@@ -9,7 +9,7 @@ export const useEditExpense = () => {
     const updateExpense = async ({ expenseName, amount, category, date }, id) => {
 
         try {
-            const res = await axios.put(`api/expense/edit/${id}`, { expenseName, amount, category, date })
+            const res = await axios.put(`api/expense/edit/${id}`, { expenseName, amount, category, date },{withCredentials:true})
             const updatedExpense = res.data.updatedExpense;
             
             // Update the expense in the list

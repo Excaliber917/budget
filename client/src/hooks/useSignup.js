@@ -18,11 +18,11 @@ export const useSignup = ()=>{
             return
         try {
             setLoading(true)
-            const res = await axios.post("/api/auth/signup",{name , userName , email , password })
-            console.log(res.data)
+            const res = await axios.post("/api/auth/signup",{name , userName , email , password },{withCredentials:true})
+            // console.log(res.data)
             localStorage.setItem("fintechUser",JSON.stringify(res.data))
             setUser(res.data)
-            navigate("/")
+            navigate("/wallet")
             toast.success("sign up successfull")
 
 

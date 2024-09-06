@@ -10,7 +10,7 @@ export const useSetBudgetList = () => {
     const getAllBudgets = async () => {
         try {
             setLoading(true);
-            const allBudgets = await axios.get("api/budget/all");
+            const allBudgets = await axios.get("api/budget/all",{withCredentials:true});
             setBudgetList(allBudgets.data.budgets);
         } catch (error) {
             console.log(error);

@@ -9,7 +9,7 @@ export const useDeleteExpense = () => {
 
 
         try {
-            const res = await axios.delete(`api/expense/delete/${id}`)
+            const res = await axios.delete(`api/expense/delete/${id}`,{withCredentials:true})
             toast.success(res.data.message)
             setExpenseList(expenseList.filter((item) => item._id !== id))
 

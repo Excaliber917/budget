@@ -10,7 +10,7 @@ export const useSetExpenseList = () => {
         try {
             setLoading(true)
 
-            const allExpenses = await axios.get("api/expense/all")
+            const allExpenses = await axios.get("api/expense/all",{withCredentials:true})
             setExpenseList(allExpenses.data.expenses)
 
 
