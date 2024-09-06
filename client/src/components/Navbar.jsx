@@ -3,8 +3,7 @@ import { useLocation, Link } from 'react-router-dom';
 import { FaHome, FaMoneyBillWave, FaRegChartBar, FaBars, FaSun, FaMoon, FaWallet } from 'react-icons/fa';
 import { RiAccountCircleLine } from 'react-icons/ri';
 import { IoLogOutOutline } from "react-icons/io5";
-import darkLogo from '../assets/logoblack.png'
-import lightLogo from '../assets/logolight.png'
+import logo from '../assets/logo.png'
 import { useDarkMode } from '../context/DarkModeContext';
 import { useAuthContext } from '../context/AuthContext'
 import useLogout from '../hooks/useLogout';
@@ -27,13 +26,13 @@ function Navbar() {
         <nav className="bg-gradient-to-b from-blue-500 to-blue-400 dark:bg-gradient-to-r dark:from-gray-800 dark:to-gray-700 text-white p-4 flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center">
-               {isDarkMode ? ( <img src={lightLogo} alt="Logo" className="h-8 w-8 mr-2" />) : (<img src={darkLogo} alt="Logo" className="h-8 w-8 mr-2" />)}
+            <img src={logo} alt="Logo" className="h-8 w-8 mr-2" />
             </div>
 
 
 
             {/* Navigation Links */}
-            <div className="hidden md:flex items-center space-x-6">
+           {user && ( <div className="hidden md:flex items-center space-x-6">
                 <div className={`flex items-center hover:text-gray-200 dark:hover:text-gray-400 ${isActive('/')}`}>
 
                     <Link to="/" className='flex items-center gap-1'> <FaHome />Home</Link>
@@ -46,7 +45,7 @@ function Navbar() {
 
                     <Link to="/budget" className='flex items-center gap-1'><FaRegChartBar />Budget</Link>
                 </div>
-            </div>
+            </div>)}
 
 
             <div className="flex items-center gap-3 justify-center px-2">

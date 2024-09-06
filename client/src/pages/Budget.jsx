@@ -6,6 +6,8 @@ import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 import { UseformatDate } from '../hooks/useSetDate'
 import { useDeleteBudget } from '../hooks/useDeleteBudget';
 import { useEditBudget } from '../hooks/useEditBudget';
+import Nprogress from 'nprogress'
+import { useNavigate } from 'react-router-dom';
 function Budget() {
   const [formData, setFormData] = useState({
     budgetName: '',
@@ -16,8 +18,8 @@ function Budget() {
   });
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
-
-  const { addBudget } = useAddBudget();
+  const navigate = useNavigate()
+  const { loading, addBudget } = useAddBudget();
   const { budgetList } = useGetBudgetList();
   const { getAllBudgets } = useSetBudgetList();
   const { updateBudget } = useEditBudget()
@@ -50,6 +52,7 @@ function Budget() {
       startDate: '',
       endDate: '',
     })
+    navigate("/expenses")
   };
 
   const handleEdit = (budget) => {
@@ -71,6 +74,22 @@ function Budget() {
     deleteBudget(id)
 
   };
+
+
+  // Configure NProgress for a slower progress bar
+  Nprogress.configure({
+    showSpinner: false,
+    speed: 800,       // Slower animation speed
+    trickleSpeed: 200 // Slower trickling speed
+  });
+
+  useEffect(() => {
+    if (loading) {
+      Nprogress.start(); // Start the loading bar when loading is true
+    } else {
+      Nprogress.done(); // Complete the loading bar when loading is false
+    }
+  }, [loading]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-blue-100 dark:bg-gradient-to-r dark:from-gray-800 dark:to-gray-700 p-4">
@@ -165,7 +184,7 @@ function Budget() {
                   </tr>
                 </thead>
                 <tbody>
-                  {budgetList.map((item) => (
+                  {budgetList?.map((item) => (
                     <tr key={item._id} className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                       <td className="py-3 px-4 text-gray-800 dark:text-gray-300 truncate max-w-[150px] md:max-w-[300px]">
                         {item.budgetName}

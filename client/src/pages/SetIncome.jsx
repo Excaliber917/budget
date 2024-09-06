@@ -2,6 +2,7 @@ import { useState } from "react";
 import { BsFillPiggyBankFill } from "react-icons/bs";
 import { useAuthContext } from '../context/AuthContext';
 import { useUpdateUser } from '../hooks/useUpdateUser';
+import { useNavigate } from "react-router-dom";
 
 function SetIncome() {
     const { user } = useAuthContext();
@@ -10,7 +11,7 @@ function SetIncome() {
     // Handle as strings for input purposes
     const [income, setIncome] = useState(user?.income?.toString() || "0");
     const [savingsGoal, setSavingsGoal] = useState(user?.savingsGoal?.toString() || "0");
-
+    const navigate = useNavigate()
     const handleIncomeChange = (e) => setIncome(e.target.value);
     const handleSavingsGoalChange = (e) => setSavingsGoal(e.target.value);
 
@@ -22,6 +23,7 @@ function SetIncome() {
             income: Number(income),
             savingsGoal: Number(savingsGoal)
         });
+        navigate("/budget")
     };
 
     return (

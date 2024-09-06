@@ -33,7 +33,7 @@ function Home() {
 
 
     useEffect(() => {
-        if (expenseList.length > 0) {
+        if (expenseList?.length > 0) {
             const upcomingList = futureTransactions();
             const pastList = pastTransactions();
             setTransactions({

@@ -6,7 +6,8 @@ import { UseformatDate } from "../hooks/useSetDate";
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 import { useDeleteExpense } from "../hooks/useDeleteExpense";
 import { useEditExpense } from '../hooks/useEditExpense'
-
+import Nprogress from 'nprogress'
+import { useNavigate } from "react-router-dom";
 
 
 function Expenses() {
@@ -19,7 +20,7 @@ function Expenses() {
 
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
-
+  const navigate = useNavigate()
   const { loading, addExpense } = useAddExpense();
   const { getAllExpenses } = useSetExpenseList();
   const { expenseList } = useGetExenseList();
@@ -51,6 +52,7 @@ function Expenses() {
       addExpense(formData);
     }
     setFormData({ expenseName: '', amount: '', category: '', date: '' });
+    navigate("/")
   };
 
   const handleEdit = (item) => {
@@ -71,7 +73,20 @@ function Expenses() {
     deleteExpense(id)
   }
 
+  // Configure NProgress for a slower progress bar
+  Nprogress.configure({
+    showSpinner: false,
+    speed: 800,       // Slower animation speed
+    trickleSpeed: 200 // Slower trickling speed
+  });
 
+  useEffect(() => {
+    if (loading) {
+      Nprogress.start(); // Start the loading bar when loading is true
+    } else {
+      Nprogress.done(); // Complete the loading bar when loading is false
+    }
+  }, [loading]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-blue-100 dark:bg-gradient-to-r dark:from-gray-800 dark:to-gray-700 p-4">
@@ -158,7 +173,7 @@ function Expenses() {
                   </tr>
                 </thead>
                 <tbody>
-                  {expenseList.map((item) => (
+                  {expenseList?.map((item) => (
                     <tr key={item?._id} className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                       <td className="py-3 px-4 text-gray-800 dark:text-gray-300 truncate max-w-[150px] md:max-w-[300px]">
                         {item?.expenseName}

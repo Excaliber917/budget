@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useLogin } from '../hooks/useLogin';
+import Nprogress from 'nprogress'
 
 function Login() {
     const [formData, setFormData] = useState({
@@ -26,6 +27,23 @@ function Login() {
         e.preventDefault();
         login(formData)
     };
+
+
+
+    // Configure NProgress for a slower progress bar
+    Nprogress.configure({
+        showSpinner: false,
+        speed: 800,       // Slower animation speed
+        trickleSpeed: 200 // Slower trickling speed
+    });
+
+    useEffect(() => {
+        if (loading) {
+          Nprogress.start(); // Start the loading bar when loading is true
+        } else {
+          Nprogress.done(); // Complete the loading bar when loading is false
+        }
+      }, [loading]);
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-blue-50 to-blue-100 dark:bg-gradient-to-r dark:from-gray-800 dark:to-gray-700 flex items-center justify-center p-4">

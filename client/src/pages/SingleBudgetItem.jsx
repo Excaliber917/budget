@@ -33,7 +33,7 @@ function SingleBudgetItem() {
                 {budgetList?.length !== 0 ? (
                     budgetList.map((budget) => {
                         // console.log(budget)
-                        const spent = calculateAmount(budget.category, budget.startDate, budget.endDate);
+                        const spent = calculateAmount(budget.category, budget.startDate, budget.endDate)||0;
                         const percentage = Math.min((spent / budget.amount) * 100, 100);
 
 

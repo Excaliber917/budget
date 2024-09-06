@@ -20,8 +20,12 @@ function Reports() {
   const { totalEXAmount } = useTotalExpense();
   const { totalBDAmount } = useTotalBudgetAmount();
   const { user } = useAuthContext();
-  const SavingStatus = user?.savingsGoal - (totalBDAmount() - totalEXAmount());
 
+  const savingsGoal = user?.savingsGoal || 0; // Handle case where savingsGoal is undefined
+  const totalExpenses = totalEXAmount() || 0; // Handle case where totalEXAmount is undefined
+  const totalBudgets = totalBDAmount() || 0; // Handle case where totalBDAmount is undefined
+
+  const SavingStatus = savingsGoal - (totalBudgets - totalExpenses); // Calculation with fallback values
 
   useEffect(() => {
     getAllExpenses();
@@ -30,13 +34,13 @@ function Reports() {
   }, []);
 
   // Step 1: Extract unique categories and sum expenses for each category
-  const categoryWiseExpenses = expenseList.reduce((acc, expense) => {
+  const categoryWiseExpenses = expenseList?.reduce((acc, expense) => {
     if (!acc[expense.category]) {
       acc[expense.category] = 0;
     }
-    acc[expense.category] += expense.amount;
+    acc[expense.category] += expense.amount || 0; // Ensure expense amount is valid
     return acc;
-  }, {});
+  }, {}) || {}; // Default to an empty object if expenseList is undefined
 
   // Step 2: Create data for Category-wise Expenses Pie Chart
   const categoryData = {
@@ -52,10 +56,10 @@ function Reports() {
 
   // Step 3: Prepare data for Savings vs Goal Pie Chart
   const savingsData = {
-    labels: ["Remaining Goal", "Savings"],
+    labels: ["Remaining Amount", "Savings"],
     datasets: [
       {
-        data: [SavingStatus, user?.savingsGoal - SavingStatus], // Savings and remaining goal
+        data: [Math.max(SavingStatus, 0), savingsGoal > 0 ? savingsGoal - Math.max(SavingStatus, 0) : 0], // Ensure valid data for the chart
         backgroundColor: ["#4BC0C0", "#FFCE56"],
         hoverBackgroundColor: ["#4BC0C0", "#FFCE56"],
       },
