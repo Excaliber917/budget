@@ -16,14 +16,14 @@ export const useLogin = () => {
         try {
             setLoading(true)
             // console.log(loading)
-            const res = await axios.post('/api/auth/login', {
+            const res = await axios.post('https://fintech-backend-eu1c.onrender.com/api/auth/login', {
                 userName,
                 password
             },{withCredentials:true})
-            toast.success("Log In successfull")
             localStorage.setItem("fintechUser", JSON.stringify(res.data))
             setUser(res.data)
             navigate("/wallet")
+            toast.success("Log In successfull")
 
         } catch (error) {
             toast.error(error.response.data.error)
