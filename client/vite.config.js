@@ -9,6 +9,7 @@ export default defineConfig({
       "/api":{
         target: "https://fintech-backend-m65o.onrender.com",
         changeOrigin: true,
+        secure: false,
       }
     }
   }
