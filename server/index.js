@@ -6,10 +6,16 @@ import authRoute from './routes/auth.route.js';
 import expenseRoute from './routes/expense.route.js';
 import budgetRoute from './routes/budget.route.js';
 import userRoute from './routes/user.route.js';
-
-
+import cors from 'cors'
 dotenv.config()
 const app = express()
+
+const corsOptions = {
+    origin: 'https://localhost:5173', //  frontend URL
+    optionsSuccessStatus: 200,
+    credentials: true,
+};
+app.use(cors(corsOptions))
 app.use(express.json());
 app.use(cookieParser())
 
