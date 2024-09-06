@@ -8,7 +8,7 @@ import { usePastTransactions } from '../hooks/usePastTransactions';
 
 import { useSetBudgetList } from '../hooks/useSetBudgetList';
 import BudgetStatus from '../components/BudgetStatus';
-import Overview from '../components/overview';
+import Overview from '../components/Overview';
 
 function Home() {
 
