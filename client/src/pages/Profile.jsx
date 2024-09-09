@@ -15,7 +15,7 @@ function Profile() {
     userName: '',
     email: '',
     password: '',
-    income: 0,
+
   });
 
   const [isEditing, setIsEditing] = useState(false);
@@ -27,7 +27,7 @@ function Profile() {
         userName: user.userName,
         email: user.email,
         password: '', // Keep the password empty, fill if the user wants to change it
-        income: user.income,
+       
       });
     }
   }, [user]);
