@@ -77,7 +77,7 @@ function Contact() {
                                 type="text"
                                 id="from_name"
                                 name="from_name"
-                                value={formData.name}
+                                value={formData.from_name}
                                 onChange={handleChange}
                                 className="pl-10 pr-4 py-3 w-full rounded-lg border border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 focus:ring-2 focus:ring-blue-500"
                                 placeholder="Your Name"
@@ -91,7 +91,7 @@ function Contact() {
                                 type="email"
                                 id="from_email"
                                 name="from_email"
-                                value={formData.email}
+                                value={formData.from_email}
                                 onChange={handleChange}
                                 className="pl-10 pr-4 py-3 w-full rounded-lg border border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 focus:ring-2 focus:ring-blue-500"
                                 placeholder="Your Email"
