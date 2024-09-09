@@ -1,8 +1,9 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import emailjs from '@emailjs/browser';
 import { FaEnvelope, FaUser, FaCommentDots } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../context/AuthContext';
 
 function Contact() {
     const [formData, setFormData] = useState({
@@ -20,6 +21,18 @@ function Contact() {
             [name]: value,
         });
     };
+
+    const {user} = useAuthContext()
+
+    useEffect(()=>{
+        if(user)
+        {
+            setFormData({
+                from_name:user.name,
+                from_email:user.email,
+            })
+        }
+    },[user])
 
     const handleSubmit = (e) => {
         e.preventDefault();
