@@ -1,15 +1,18 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import toast from 'react-hot-toast';
+import emailjs from '@emailjs/browser';
 import { FaEnvelope, FaUser, FaCommentDots } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 function Contact() {
     const [formData, setFormData] = useState({
-        name: '',
-        email: '',
+        from_name: '',
+        from_email: '',
         message: ''
     });
-
-    const [submitted, setSubmitted] = useState(false);
-
+    const [submitted, setSubmitted] = useState(false)
+    const navigate = useNavigate();
+    const form = useRef();
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -20,14 +23,24 @@ function Contact() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (formData.name && formData.email && formData.message) {
-            // Logic to handle form submission, like sending an email or saving data
-            console.log('Form Submitted:', formData);
-            setSubmitted(true);
+        if (formData.from_name && formData.from_email && formData.message) {
+            emailjs.sendForm('service_9mp4t3q', 'template_1zpox1m', form.current, 'oqTfP-HP0MvvlK8fs')
+                .then(
+                    () => {
+                        toast.success('Message sent successfully!');
+                        setSubmitted(true)
+                        setTimeout(() => navigate('/'), 1000);
+                    },
+                    (error) => {
+                        toast.error('Failed to send message. Please try again later.');
+                        console.log('FAILED...', error.text);
+                    }
+                );
         } else {
-            alert('Please fill in all fields.');
+            toast.error("Please fill all the fields")
         }
-    };
+
+    }
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-50 to-blue-200 dark:bg-gradient-to-r dark:from-gray-800 dark:to-gray-700  p-4">
@@ -43,13 +56,14 @@ function Contact() {
                         </p>
                     </div>
                 ) : (
-                    <form onSubmit={handleSubmit} className="space-y-6">
+                    <form ref={form} onSubmit={handleSubmit} className="space-y-6">
                         {/* Name Field */}
                         <div className="relative">
                             <FaUser className="absolute top-3 left-3 text-gray-400 dark:text-gray-500" />
                             <input
                                 type="text"
-                                name="name"
+                                id="from_name"
+                                name="from_name"
                                 value={formData.name}
                                 onChange={handleChange}
                                 className="pl-10 pr-4 py-3 w-full rounded-lg border border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 focus:ring-2 focus:ring-blue-500"
@@ -62,7 +76,8 @@ function Contact() {
                             <FaEnvelope className="absolute top-3 left-3 text-gray-400 dark:text-gray-500" />
                             <input
                                 type="email"
-                                name="email"
+                                id="from_email"
+                                name="from_email"
                                 value={formData.email}
                                 onChange={handleChange}
                                 className="pl-10 pr-4 py-3 w-full rounded-lg border border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 focus:ring-2 focus:ring-blue-500"
